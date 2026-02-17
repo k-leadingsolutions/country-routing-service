@@ -1,0 +1,19 @@
+# Prometheus configuration for monitoring Country Routing Service
+global:
+  scrape_interval: 15s
+  evaluation_interval: 15s
+
+scrape_configs:
+  # Country Routing Service metrics
+  - job_name: 'country-routing-service'
+    metrics_path: '/actuator/prometheus'
+    static_configs:
+      - targets: ['country-routing-service:8080']
+        labels:
+          application: 'country-routing-service'
+          environment: 'docker'
+
+  # Prometheus self-monitoring
+  - job_name: 'prometheus'
+    static_configs:
+      - targets: ['localhost:9090']
